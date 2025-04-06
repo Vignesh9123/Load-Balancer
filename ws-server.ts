@@ -11,13 +11,10 @@ interface WS extends WebSocket{
 }
 
 server.on('connection', (socket:WS)=>{
-    console.log(`Connected ${socket}`)
+    console.log(`Connected at ${PORT}`)
     socket.id = uuid()
-    server.clients.forEach((c)=>{
-        if(c != socket)
-        c.send(`New user joined ${socket.id}`, {
-            binary: false
-        })
+    socket.send(`You are connected to port ${PORT}`, {
+        binary: false
     })
     socket.on('message', (data, isBinary)=>{
         console.log('Received data', data.toString(), 'from', socket.id)
